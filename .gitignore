@@ -1,0 +1,32 @@
+# Virtual environment
+venv/
+venv/**
+env/
+
+# Secret keys
+.env
+
+# Data files
+data/tracks.csv
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# VS Code
+.vscode/
+
+# Spotify cache
+.cache
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+# Large data files
+data/tracks.csv
+data/dataset.csv
+data/*.csv
