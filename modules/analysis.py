@@ -3,205 +3,221 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-LOG_FILE = 'data/productivity_log.csv'
+MERGED_FILE = 'data/merged_data.csv'
 
+# ── Load Data ────────────────────────────────────────────────
 def load_data():
-    df = pd.read_csv(LOG_FILE, encoding='utf-8')
-    df['productivity_score'] = pd.to_numeric(
-        df['productivity_score'], errors='coerce')
-    df['focus_score'] = pd.to_numeric(
-        df['focus_score'], errors='coerce')
+    df = pd.read_csv(MERGED_FILE)
 
-    # Convert audio features to numeric
-    for col in ['avg_tempo','avg_energy','avg_valence',
-                'avg_instrumentalness','avg_danceability',
-                'avg_acousticness']:
+    numeric_cols = ['avg_tempo', 'avg_energy',
+                    'avg_valence', 'avg_instrumentalness',
+                    'avg_danceability', 'avg_acousticness',
+                    'productivity_score', 'focus_score']
+
+    for col in numeric_cols:
         if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors='coerce')
+            df[col] = pd.to_numeric(df[col],
+                                     errors='coerce')
 
-    df = df.dropna(subset=['productivity_score',
-                            'focus_score'])
+    df = df.dropna(subset=['productivity_score'])
     print(f"✅ Loaded {len(df)} sessions")
-    print(f"Columns: {df.columns.tolist()}")
     return df
 
-def show_stats(df):
-    print("\n" + "="*45)
-    print("       📊 YOUR MOODMETRIC STATS")
-    print("="*45)
-    print(f"Total Sessions     : {len(df)}")
-    print(f"Avg Productivity   : "
-          f"{df['productivity_score'].mean():.1f}/10")
-    print(f"Avg Focus          : "
-          f"{df['focus_score'].mean():.1f}/10")
+# ── Plot 1: Scatter Plots ────────────────────────────────────
+def plot_scatter(df):
+    print("\nGenerating Scatter Plots...")
 
-    if 'avg_tempo' in df.columns:
-        print(f"Avg Tempo          : "
-              f"{df['avg_tempo'].mean():.0f} BPM")
-        print(f"Avg Energy         : "
-              f"{df['avg_energy'].mean():.2f}")
-        print(f"Avg Valence        : "
-              f"{df['avg_valence'].mean():.2f}")
+    features = ['avg_tempo',    'avg_energy',
+                'avg_valence',  'avg_instrumentalness',
+                'avg_danceability', 'avg_acousticness']
 
-    print(f"Most common task   : "
-          f"{df['task_type'].mode()[0]}")
-    print(f"Best productivity  : "
-          f"{df['productivity_score'].max()}/10")
-    print(f"Worst productivity : "
-          f"{df['productivity_score'].min()}/10")
-    print("="*45)
+    features  = [f for f in features
+                 if f in df.columns]
+    df_clean  = df[features +
+                   ['productivity_score']].dropna()
 
-def correlation_analysis(df):
-    features = ['avg_tempo','avg_energy','avg_valence',
-                'avg_instrumentalness','avg_danceability',
-                'avg_acousticness']
-
-    # Only use features that exist and have data
-    available = [f for f in features
-                 if f in df.columns
-                 and df[f].notna().sum() > 2]
-
-    if not available:
-        print("⚠️ No audio features found for correlation!")
-        return
-
-    print(f"\n📊 Running Correlation Analysis "
-          f"for {len(available)} features...")
+    print(f"Rows for scatter: {len(df_clean)}")
 
     fig, axes = plt.subplots(2, 3, figsize=(15, 10))
     axes      = axes.flatten()
 
-    for i in range(6):
-        if i < len(available):
-            feature = available[i]
-            x = df[feature].dropna()
-            y = df.loc[x.index, 'productivity_score']
+    for i, feature in enumerate(features):
+        x = df_clean[feature].values.astype(float)
+        y = df_clean['productivity_score'].values.astype(float)
 
-            axes[i].scatter(x, y, alpha=0.7,
-                           color='steelblue', s=100)
+        axes[i].scatter(x, y,
+                        color      = 'steelblue',
+                        edgecolors = 'white',
+                        alpha      = 0.8,
+                        s          = 100,
+                        zorder     = 3)
 
-            if len(x) > 1:
-                z  = np.polyfit(x, y, 1)
-                p  = np.poly1d(z)
-                xs = np.linspace(x.min(), x.max(), 100)
-                axes[i].plot(xs, p(xs),
-                            "r--", alpha=0.8)
+        # Trend line
+        if len(set(x)) > 1:
+            z        = np.polyfit(x, y, 1)
+            p        = np.poly1d(z)
+            x_line   = np.linspace(x.min(), x.max(), 100)
+            axes[i].plot(x_line, p(x_line),
+                         'r--', linewidth=2,
+                         alpha=0.8, zorder=2)
 
-            corr = x.corr(y)
-            label = feature.replace('avg_','').title()
-            axes[i].set_xlabel(label, fontsize=11)
-            axes[i].set_ylabel('Productivity', fontsize=11)
-            axes[i].set_title(f'{label} (r={corr:.2f})',
-                            fontsize=12,
-                            fontweight='bold')
-            axes[i].set_ylim(0, 11)
-        else:
-            axes[i].set_visible(False)
+        corr  = np.corrcoef(x, y)[0, 1]
+        label = feature.replace('avg_', '').title()
+
+        axes[i].set_xlabel(label,      fontsize=11)
+        axes[i].set_ylabel('Productivity', fontsize=11)
+        axes[i].set_title(f'{label} (r={corr:.2f})',
+                           fontsize=12)
+        axes[i].set_ylim(0, 11)
+        axes[i].grid(True, alpha=0.3)
 
     plt.suptitle('Audio Features vs Productivity Score',
-                fontsize=16, fontweight='bold')
+                 fontsize=16)
     plt.tight_layout()
-    plt.savefig('data/correlation_plots.png', dpi=150)
+    plt.savefig('data/correlation_plots.png',
+                dpi=150, bbox_inches='tight')
     plt.show()
-    print("✅ Saved → data/correlation_plots.png")
+    print("✅ Saved correlation_plots.png")
 
+# ── Plot 2: Heatmap ──────────────────────────────────────────
 def plot_heatmap(df):
-    cols = ['avg_tempo','avg_energy','avg_valence',
-            'avg_danceability','avg_instrumentalness',
-            'avg_acousticness','productivity_score',
-            'focus_score']
+    print("\nGenerating Heatmap...")
 
-    available = [c for c in cols
-                 if c in df.columns
-                 and df[c].notna().sum() > 2]
+    cols     = ['avg_tempo', 'avg_energy',
+                'avg_valence', 'avg_danceability',
+                'avg_acousticness',
+                'avg_instrumentalness',
+                'productivity_score', 'focus_score']
+    cols     = [c for c in cols if c in df.columns]
+    df_clean = df[cols].dropna()
+    df_clean = df_clean.loc[
+                :, df_clean.nunique() > 1]
 
-    if len(available) < 2:
-        print("⚠️ Not enough data for heatmap")
-        return
-
-    print("\n📊 Generating Heatmap...")
-    plt.figure(figsize=(12, 9))
-    sns.heatmap(df[available].corr(),
-                annot=True, cmap='coolwarm',
-                fmt='.2f', linewidths=0.5,
-                center=0,
-                annot_kws={'size': 10})
+    plt.figure(figsize=(10, 7))
+    sns.heatmap(df_clean.corr(),
+                annot      = True,
+                cmap       = 'coolwarm',
+                fmt        = '.2f',
+                center     = 0,
+                linewidths = 0.5)
     plt.title('Feature Correlation Heatmap',
-             fontsize=14, fontweight='bold')
+               fontsize=14)
     plt.tight_layout()
     plt.savefig('data/heatmap.png', dpi=150)
     plt.show()
-    print("✅ Saved → data/heatmap.png")
+    print("✅ Saved heatmap.png")
 
+# ── Plot 3: By Task Type ─────────────────────────────────────
 def plot_by_task(df):
-    print("\n📊 Productivity by Task Type...")
+    print("\nGenerating Task Analysis...")
 
-    # Clean task_type
-    df['task_type'] = df['task_type'].astype(str).str.strip()
-    task_avg = df.groupby('task_type')[
-        'productivity_score'].mean().sort_values(
-        ascending=False)
+    task_avg = df.groupby('task_type').agg(
+        Productivity = ('productivity_score', 'mean'),
+        Focus        = ('focus_score',        'mean')
+    ).reset_index()
 
-    print(f"Task types found: {task_avg.index.tolist()}")
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-    plt.figure(figsize=(10, 6))
-    colors = ['steelblue','coral','mediumseagreen',
-              'mediumpurple','sandybrown']
+    axes[0].bar(task_avg['task_type'],
+                task_avg['Productivity'],
+                color='steelblue')
+    axes[0].set_title('Avg Productivity by Task')
+    axes[0].set_ylim(0, 10)
+    axes[0].grid(True, alpha=0.3, axis='y')
+    for i, v in enumerate(task_avg['Productivity']):
+        axes[0].text(i, v+0.1, f'{v:.1f}',
+                     ha='center', fontsize=11)
 
-    bars = plt.bar(task_avg.index,
-                   task_avg.values,
-                   color=colors[:len(task_avg)],
-                   width=0.5)
+    axes[1].bar(task_avg['task_type'],
+                task_avg['Focus'],
+                color='coral')
+    axes[1].set_title('Avg Focus by Task')
+    axes[1].set_ylim(0, 10)
+    axes[1].grid(True, alpha=0.3, axis='y')
+    for i, v in enumerate(task_avg['Focus']):
+        axes[1].text(i, v+0.1, f'{v:.1f}',
+                     ha='center', fontsize=11)
 
-    for bar, val in zip(bars, task_avg.values):
-        plt.text(bar.get_x() + bar.get_width()/2,
-                bar.get_height() + 0.15,
-                f'{val:.1f}', ha='center',
-                fontsize=12, fontweight='bold')
-
-    plt.title('Average Productivity by Task Type',
-             fontsize=14, fontweight='bold')
-    plt.xlabel('Task Type', fontsize=12)
-    plt.ylabel('Avg Productivity Score', fontsize=12)
-    plt.ylim(0, 12)
-    plt.xticks(fontsize=11)
+    plt.suptitle('Productivity & Focus by Task Type',
+                  fontsize=14)
     plt.tight_layout()
-    plt.savefig('data/task_productivity.png', dpi=150)
+    plt.savefig('data/task_analysis.png', dpi=150)
     plt.show()
-    print("✅ Saved → data/task_productivity.png")
+    print("✅ Saved task_analysis.png")
 
-def plot_over_time(df):
-    print("\n📊 Productivity Over Time...")
-    plt.figure(figsize=(12, 5))
-    plt.plot(range(len(df)),
-             df['productivity_score'],
-             marker='o', color='steelblue',
-             linewidth=2, markersize=8)
-    plt.fill_between(range(len(df)),
-                    df['productivity_score'],
-                    alpha=0.2, color='steelblue')
+# ── Plot 4: High vs Low Productivity ────────────────────────
+def plot_high_vs_low(df):
+    print("\nGenerating High vs Low Analysis...")
 
-    avg = df['productivity_score'].mean()
-    plt.axhline(y=avg, color='red',
-               linestyle='--', alpha=0.7,
-               label=f'Average: {avg:.1f}')
+    df['productive'] = df['productivity_score'] >= 7
+    features         = ['avg_tempo', 'avg_energy',
+                        'avg_valence',
+                        'avg_instrumentalness']
 
-    plt.title('Your Productivity Over Time',
-             fontsize=14, fontweight='bold')
-    plt.xlabel('Session Number', fontsize=12)
-    plt.ylabel('Productivity Score', fontsize=12)
-    plt.legend(fontsize=11)
-    plt.ylim(0, 11)
+    fig, axes = plt.subplots(1, 4, figsize=(16, 5))
+
+    for i, feature in enumerate(features):
+        high = df[df['productive'] == True][feature]
+        low  = df[df['productive'] == False][feature]
+        axes[i].boxplot([high, low],
+                         labels=['High\n(≥7)',
+                                 'Low\n(<7)'])
+        axes[i].set_title(
+            feature.replace('avg_', '').title())
+        axes[i].grid(True, alpha=0.3)
+
+    plt.suptitle(
+        'Audio Profile: High vs Low Productivity',
+        fontsize=14)
     plt.tight_layout()
-    plt.savefig('data/productivity_over_time.png', dpi=150)
+    plt.savefig('data/high_vs_low.png', dpi=150)
     plt.show()
-    print("✅ Saved → data/productivity_over_time.png")
+    print("✅ Saved high_vs_low.png")
 
+# ── Print Insights ───────────────────────────────────────────
+def print_insights(df):
+    print("\n" + "="*50)
+    print("       🎵 MOODMETRIC INSIGHTS")
+    print("="*50)
+
+    features = ['avg_tempo', 'avg_energy',
+                'avg_valence', 'avg_instrumentalness',
+                'avg_danceability', 'avg_acousticness']
+
+    correlations = {}
+    print("\n📊 Correlation with Productivity:")
+    for f in features:
+        if f in df.columns:
+            corr           = df[f].corr(
+                             df['productivity_score'])
+            correlations[f] = corr
+            bar            = "█" * int(abs(corr) * 20)
+            sign           = "+" if corr > 0 else "-"
+            print(f"  {f.replace('avg_','').ljust(20)}"
+                  f": {sign}{abs(corr):.2f} {bar}")
+
+    if correlations:
+        best = max(correlations,
+                   key=lambda x: abs(correlations[x]))
+        print(f"\n🏆 Most Impactful: "
+              f"{best.replace('avg_','').upper()}")
+
+    print(f"\n📈 Your Stats:")
+    print(f"   Avg Productivity : "
+          f"{df['productivity_score'].mean():.1f}/10")
+    print(f"   Avg Focus        : "
+          f"{df['focus_score'].mean():.1f}/10")
+    print(f"   Best Task        : "
+          f"{df.groupby('task_type')['productivity_score'].mean().idxmax()}")
+    print(f"   Total Sessions   : {len(df)}")
+    print("="*50)
+
+# ── Main ─────────────────────────────────────────────────────
 if __name__ == "__main__":
     df = load_data()
-    show_stats(df)
-    correlation_analysis(df)
+    print_insights(df)
+    plot_scatter(df)
     plot_heatmap(df)
     plot_by_task(df)
-    plot_over_time(df)
-    print("\n🎉 All analysis complete!")
+    plot_high_vs_low(df)
+    print("\n✅ All analysis complete!")

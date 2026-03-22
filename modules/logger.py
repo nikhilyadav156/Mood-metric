@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 LOG_FILE     = 'data/productivity_log.csv'
-SPOTIFY_FILE = 'data/dataset.csv'
+SPOTIFY_FILE = 'data/spotify_data.csv'
 
 def initialize_log():
     if not os.path.exists(LOG_FILE):
@@ -22,7 +22,7 @@ def initialize_log():
 def search_song(df, query):
     results = df[df['track_name'].str.contains(
                  query, case=False, na=False)]
-    return results[['track_name', 'artists',
+    return results[['track_name', 'artist',
                     'tempo', 'energy',
                     'valence', 'instrumentalness',
                     'danceability', 'acousticness']].head(5)
@@ -43,7 +43,7 @@ def pick_song(df, song_number):
         print(f"\n  Results:")
         for i, (_, row) in enumerate(results.iterrows()):
             print(f"  {i+1}. {row['track_name']}"
-                  f" — {row['artists']}")
+                  f" — {row['artist']}")
 
         choice = input("  Pick number (0 to search again): ")
         if choice == '0':
@@ -53,7 +53,7 @@ def pick_song(df, song_number):
             chosen = results.iloc[int(choice)-1]
             # Return ONLY the song name string
             song_name = (f"{chosen['track_name']}"
-                        f" - {chosen['artists']}")
+                        f" - {chosen['artist']}")
             print(f"  ✅ Added: {song_name}")
             return song_name
         except:
