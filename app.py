@@ -13,376 +13,184 @@ st.set_page_config(
     initial_sidebar_state = "expanded"
 )
 
-# ── Spotify-Inspired CSS ─────────────────────────────────────
+# ── CSS ──────────────────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap');
-
-* { box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&display=swap');
 
 html, body, [class*="css"] {
-    font-family : 'Figtree', sans-serif;
-    background  : #121212;
-    color       : #FFFFFF;
+    font-family: 'Figtree', sans-serif !important;
+    background : #121212 !important;
+    color      : #FFFFFF !important;
 }
-
-.stApp { background: #121212; }
-
+.stApp { background: #121212 !important; }
 #MainMenu, footer, header { visibility: hidden; }
 
-::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #121212; }
-::-webkit-scrollbar-thumb {
-    background: #535353; border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #1DB954;
-}
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #1DB954; }
 
-/* SIDEBAR */
 [data-testid="stSidebar"] {
-    background  : #000000 !important;
+    background: #000000 !important;
     border-right: none !important;
-    min-width   : 240px !important;
 }
-[data-testid="stSidebar"] > div { padding: 0 !important; }
-[data-testid="stSidebar"] * { color: #B3B3B3 !important; }
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3 { color: #FFFFFF !important; }
-[data-testid="stSidebar"] .stMultiSelect span {
+[data-testid="stSidebar"] * {
+    color: #B3B3B3 !important;
+    font-family: 'Figtree', sans-serif !important;
+}
+[data-testid="stSidebar"] label {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+}
+[data-testid="stSidebar"] [data-baseweb="tag"] {
     background: #1DB954 !important;
-    color     : #000000 !important;
+    color: #000 !important;
 }
-
-/* TABS */
+.block-container {
+    padding-top: 0 !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    max-width: none !important;
+}
 .stTabs [data-baseweb="tab-list"] {
-    background   : transparent;
+    background: transparent;
     border-bottom: 1px solid #282828;
-    gap          : 0;
-    padding      : 0;
+    gap: 0; padding: 0;
 }
 .stTabs [data-baseweb="tab"] {
-    background    : transparent;
-    color         : #B3B3B3;
-    font-family   : 'Figtree', sans-serif;
-    font-size     : 0.875rem;
-    font-weight   : 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding       : 1rem 1.5rem;
-    border        : none;
-    border-bottom : 2px solid transparent;
-    border-radius : 0;
-    transition    : all 0.2s;
+    background: transparent !important;
+    color: #B3B3B3 !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    padding: 1rem 1.5rem !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
 }
-.stTabs [data-baseweb="tab"]:hover { color: #FFFFFF; }
+.stTabs [data-baseweb="tab"]:hover { color: #FFFFFF !important; }
 .stTabs [aria-selected="true"] {
-    background    : transparent !important;
-    color         : #FFFFFF !important;
-    border-bottom : 2px solid #1DB954 !important;
+    background: transparent !important;
+    color: #FFFFFF !important;
+    border-bottom: 2px solid #1DB954 !important;
 }
-
-/* BUTTONS */
 .stButton > button {
-    background    : #1DB954;
-    color         : #000000;
-    font-family   : 'Figtree', sans-serif;
-    font-weight   : 700;
-    font-size     : 0.875rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border        : none;
-    border-radius : 500px;
-    padding       : 0.875rem 2rem;
-    transition    : all 0.2s;
-    min-width     : 160px;
+    background: #1DB954 !important;
+    color: #000000 !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    border-radius: 500px !important;
+    padding: 0.7rem 2rem !important;
+    width: auto !important;
 }
 .stButton > button:hover {
-    background: #1ed760;
-    transform : scale(1.04);
+    background: #1ed760 !important;
+    transform: scale(1.03) !important;
 }
-
-/* SELECT / MULTISELECT */
-.stSelectbox [data-baseweb="select"] > div,
-.stMultiSelect [data-baseweb="select"] > div {
-    background    : #282828 !important;
-    border        : 1px solid #333 !important;
-    border-radius : 4px !important;
-    color         : #FFFFFF !important;
+.stSelectbox > div > div,
+.stMultiSelect > div > div {
+    background: #282828 !important;
+    border: 1px solid #3E3E3E !important;
+    border-radius: 6px !important;
+    color: #FFFFFF !important;
 }
-
-/* CUSTOM COMPONENTS */
-.now-playing {
-    background    : linear-gradient(135deg,#1a6b38 0%,#121212 100%);
-    border-radius : 12px;
-    padding       : 2.5rem 3rem;
-    margin-bottom : 2rem;
-    position      : relative;
-    overflow      : hidden;
-}
-.now-playing::before {
-    content       : '';
-    position      : absolute;
-    top:-50%; right:-10%;
-    width         : 400px;
-    height        : 400px;
-    background    : radial-gradient(circle,rgba(29,185,84,0.15) 0%,transparent 70%);
-    pointer-events: none;
-}
-.now-playing-label {
-    font-size     : 0.7rem;
-    font-weight   : 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color         : #1DB954;
-    margin-bottom : 0.5rem;
-}
-.now-playing-title {
-    font-size     : 3.5rem;
-    font-weight   : 800;
-    color         : #FFFFFF;
-    line-height   : 1.05;
-    letter-spacing: -1px;
-    margin-bottom : 0.75rem;
-}
-.now-playing-sub {
-    font-size: 1rem;
-    color    : #B3B3B3;
-}
-
-.stat-card {
-    background   : #181818;
-    border-radius: 8px;
-    padding      : 1.5rem;
-    transition   : background 0.2s;
-    height       : 100%;
-}
-.stat-card:hover { background: #282828; }
-.stat-card-icon  { font-size: 2rem; margin-bottom: 1rem; }
-.stat-card-value {
-    font-size    : 2rem;
-    font-weight  : 800;
-    color        : #FFFFFF;
-    line-height  : 1;
-    margin-bottom: 0.35rem;
-}
-.stat-card-label {
-    font-size: 0.8rem;
-    color    : #B3B3B3;
-}
-.stat-card-badge {
-    display       : inline-block;
-    background    : #1DB954;
-    color         : #000000;
-    font-size     : 0.65rem;
-    font-weight   : 700;
-    letter-spacing: 0.05em;
-    padding       : 2px 8px;
-    border-radius : 500px;
-    margin-top    : 0.5rem;
-    text-transform: uppercase;
-}
-
-.track-row {
-    display        : flex;
-    align-items    : center;
-    padding        : 0.5rem 1rem;
-    border-radius  : 4px;
-    transition     : background 0.15s;
-    margin         : 2px 0;
-    gap            : 1rem;
-}
-.track-row:hover  { background: #282828; }
-.track-number {
-    font-size  : 0.9rem;
-    color      : #B3B3B3;
-    min-width  : 20px;
-    text-align : center;
-}
-.track-info   { flex: 1; }
-.track-name   {
-    font-size  : 0.95rem;
-    font-weight: 500;
-    color      : #FFFFFF;
-}
-.track-artist {
-    font-size : 0.8rem;
-    color     : #B3B3B3;
-    margin-top: 2px;
-}
-.track-pill {
-    background   : #282828;
-    border-radius: 500px;
-    padding      : 3px 10px;
-    font-size    : 0.75rem;
-    color        : #B3B3B3;
-    font-weight  : 500;
-}
-.track-pill-green {
-    background: rgba(29,185,84,0.15);
-    color     : #1DB954;
-}
-
-.sp-section {
-    display        : flex;
-    justify-content: space-between;
-    align-items    : baseline;
-    margin         : 2rem 0 1rem 0;
-}
-.sp-section-title {
-    font-size     : 1.5rem;
-    font-weight   : 700;
-    color         : #FFFFFF;
-    letter-spacing: -0.3px;
-}
-
-.insight-card {
-    background   : #181818;
-    border-radius: 8px;
-    padding      : 1.5rem;
-    border-left  : 3px solid #1DB954;
-    margin       : 1rem 0;
-}
-.insight-tag {
-    font-size     : 0.65rem;
-    font-weight   : 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color         : #1DB954;
-    margin-bottom : 0.5rem;
-}
-.insight-text {
-    font-size  : 0.95rem;
-    color      : #FFFFFF;
-    line-height: 1.6;
-}
-
-.pred-card {
-    background   : #181818;
-    border-radius: 12px;
-    padding      : 3rem 2rem;
-    text-align   : center;
-}
-.pred-score {
-    font-size     : 8rem;
-    font-weight   : 800;
-    line-height   : 1;
-    color         : #1DB954;
-    letter-spacing: -4px;
-}
-.pred-label {
-    font-size     : 0.75rem;
-    font-weight   : 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color         : #B3B3B3;
-    margin-top    : 0.5rem;
-}
-
-.sp-bar-wrap  { margin: 0.5rem 0; }
-.sp-bar-label {
-    display        : flex;
-    justify-content: space-between;
-    margin-bottom  : 5px;
-    font-size      : 0.8rem;
-    color          : #B3B3B3;
-}
-.sp-bar-bg {
-    background   : #282828;
-    border-radius: 500px;
-    height       : 4px;
-    width        : 100%;
-    overflow     : hidden;
-}
-.sp-bar-fill {
-    height       : 4px;
-    border-radius: 500px;
-    background   : #1DB954;
-}
-
-.sp-divider {
-    border    : none;
-    border-top: 1px solid #282828;
-    margin    : 1.5rem 0;
-}
-
-.genre-tag {
-    display      : inline-block;
-    background   : #282828;
-    border-radius: 4px;
-    padding      : 0.4rem 0.85rem;
-    font-size    : 0.8rem;
-    font-weight  : 500;
-    color        : #FFFFFF;
-    margin       : 3px;
-    transition   : background 0.15s;
-}
-.genre-tag:hover      { background: #3E3E3E; }
-.genre-tag-active {
-    background: rgba(29,185,84,0.2);
-    color     : #1DB954;
+.stSelectbox label, .stMultiSelect label, .stSlider label {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# ── File Paths ───────────────────────────────────────────────
+# ── Paths ────────────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
-SP_COLORS = ['#1DB954','#1ed760','#169e47',
-             '#0d6e32','#53d683']
+# ── Colors ───────────────────────────────────────────────────
+G  = '#1DB954'
+B  = '#4C9EEB'
+P  = '#A78BFA'
+A  = '#FCD34D'
+C  = '#FF6B6B'
+T  = '#2DD4BF'
+PALETTE = [G, B, P, A, C, T]
 
-def sp_fig(fig, height=380):
+# ── Chart theme ───────────────────────────────────────────────
+# KEY FIX: legend moved to BOTTOM (y=-0.25) so it never
+# overlaps the title (which sits at the top).
+# Margins: t=50 for title, b=90 for bottom legend.
+def sp(fig, h=400, show_legend=True):
     fig.update_layout(
-        plot_bgcolor  = 'rgba(0,0,0,0)',
-        paper_bgcolor = 'rgba(24,24,24,1)',
-        font_color    = '#B3B3B3',
-        font_family   = 'Figtree',
-        title_font    = dict(size=15, color='#FFFFFF',
-                              family='Figtree'),
-        height        = height,
-        margin        = dict(t=50,b=40,l=40,r=20),
+        plot_bgcolor  = '#1a1a1a',
+        paper_bgcolor = '#181818',
+        font          = dict(family='Figtree', color='#B3B3B3', size=11),
+        title_font    = dict(family='Figtree', color='#FFFFFF', size=14),
+        height        = h,
+        # t=50 gives title room; b=90 gives bottom legend room
+        margin        = dict(t=50, b=90, l=50, r=20),
+        showlegend    = show_legend,
         legend        = dict(
-            bgcolor = 'rgba(0,0,0,0)',
-            font    = dict(color='#B3B3B3', size=12)
+            bgcolor        = 'rgba(0,0,0,0)',
+            bordercolor    = 'rgba(0,0,0,0)',
+            font           = dict(color='#B3B3B3', size=11, family='Figtree'),
+            orientation    = 'h',       # horizontal row
+            yanchor        = 'top',     # anchor relative to y
+            y              = -0.22,     # below the chart
+            xanchor        = 'center',
+            x              = 0.5        # centred
         )
     )
     fig.update_xaxes(
-        gridcolor='#282828', linecolor='#282828',
-        tickcolor='#535353',
-        tickfont=dict(color='#B3B3B3', size=11)
+        gridcolor  = '#282828', linecolor = '#282828',
+        tickfont   = dict(color='#B3B3B3', size=10, family='Figtree'),
+        title_font = dict(color='#B3B3B3', size=11, family='Figtree')
     )
     fig.update_yaxes(
-        gridcolor='#282828', linecolor='#282828',
-        tickcolor='#535353',
-        tickfont=dict(color='#B3B3B3', size=11)
+        gridcolor  = '#282828', linecolor = '#282828',
+        tickfont   = dict(color='#B3B3B3', size=10, family='Figtree'),
+        title_font = dict(color='#B3B3B3', size=11, family='Figtree')
     )
     return fig
 
-# ── Load Data ────────────────────────────────────────────────
+# Variant for bar charts with many x-axis labels — extra bottom space
+def sp_bar(fig, h=400):
+    fig = sp(fig, h=h)
+    fig.update_layout(
+        margin = dict(t=50, b=120, l=50, r=20),
+        xaxis  = dict(tickangle=-35)   # angled labels = no cut-off
+    )
+    return fig
+
+# Variant for charts with no legend needed
+def sp_nolegend(fig, h=400):
+    return sp(fig, h=h, show_legend=False)
+
+# ── Data ─────────────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    path = os.path.join(DATA_DIR, 'merged_data.csv')
-    df   = pd.read_csv(path)
-    for col in ['productivity_score','focus_score',
-                'avg_tempo','avg_energy','avg_valence',
-                'avg_instrumentalness',
-                'avg_danceability','avg_acousticness']:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col],
-                                     errors='coerce')
+    df = pd.read_csv(os.path.join(DATA_DIR, 'merged_data.csv'))
+    for c in ['productivity_score','focus_score','avg_tempo',
+              'avg_energy','avg_valence','avg_instrumentalness',
+              'avg_danceability','avg_acousticness']:
+        if c in df.columns:
+            df[c] = pd.to_numeric(df[c], errors='coerce')
     return df.dropna(subset=['productivity_score'])
 
 @st.cache_data
 def load_spotify():
-    path = os.path.join(DATA_DIR, 'dataset.csv')
-    return pd.read_csv(path, encoding='utf-8')
+    return pd.read_csv(
+        os.path.join(DATA_DIR, 'dataset.csv'), encoding='utf-8')
 
 @st.cache_resource
 def load_model():
-    path = os.path.join(DATA_DIR, 'model.pkl')
-    with open(path, 'rb') as f:
+    with open(os.path.join(DATA_DIR, 'model.pkl'), 'rb') as f:
         return pickle.load(f)
 
 df         = load_data()
@@ -391,525 +199,622 @@ model      = load_model()
 
 avg_prod   = df['productivity_score'].mean()
 avg_focus  = df['focus_score'].mean()
-best_task  = df.groupby('task_type')[
-    'productivity_score'].mean().idxmax()
 total_sess = len(df)
+best_task  = df.groupby('task_type')['productivity_score'].mean().idxmax()
+avg_tempo  = df['avg_tempo'].mean()
+avg_energy = df['avg_energy'].mean()
 
 feat_names = ['Tempo','Energy','Valence',
-              'Instrumentalness',
-              'Danceability','Acousticness']
-best_feat_i = model.feature_importances_.argmax()
-best_feat   = feat_names[best_feat_i] \
-              if best_feat_i < len(feat_names) \
-              else "Energy"
+              'Instrumentalness','Danceability','Acousticness']
+feat_cols  = ['avg_tempo','avg_energy','avg_valence',
+              'avg_instrumentalness','avg_danceability','avg_acousticness']
+best_fi    = int(model.feature_importances_.argmax())
+best_feat  = feat_names[best_fi] if best_fi < 6 else "Energy"
 
-# ── SIDEBAR ──────────────────────────────────────────────────
+# ════════════════════════════════════════════════════════════
+# SIDEBAR
+# ════════════════════════════════════════════════════════════
 with st.sidebar:
-    st.markdown("""
-    <div style='padding:1.5rem 1.5rem 0.5rem;'>
-        <div style='display:flex;align-items:center;
-                    gap:0.6rem;margin-bottom:2rem;'>
-            <div style='width:36px;height:36px;
-                        background:#1DB954;border-radius:50%;
-                        display:flex;align-items:center;
-                        justify-content:center;
-                        font-size:1.1rem;'>🎵</div>
-            <span style='font-family:Figtree,sans-serif;
-                          font-size:1.3rem;font-weight:800;
-                          color:#FFFFFF !important;
-                          letter-spacing:-0.5px;'>
-                MoodMetric
-            </span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("### 🎵 MoodMetric")
+    st.markdown("---")
 
     task_filter = st.multiselect(
-        "Filter by Task",
+        "FILTERS — Task Types",
         options = df['task_type'].unique().tolist(),
         default = df['task_type'].unique().tolist()
     )
 
-    st.markdown("<hr class='sp-divider'>",
-                unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("**Avg Audio Profile**")
 
-    st.markdown("""
-    <div style='padding:0 1rem;'>
-        <div style='font-size:0.65rem;font-weight:700;
-                    letter-spacing:0.12em;
-                    text-transform:uppercase;
-                    color:#B3B3B3 !important;
-                    margin-bottom:1rem;'>
-            Avg Audio Profile
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    for label, val, mx, clr in [
+        ("Energy",       df['avg_energy'].mean(),          1, G),
+        ("Valence",      df['avg_valence'].mean(),          1, B),
+        ("Instrumental", df['avg_instrumentalness'].mean(), 1, P),
+        ("Danceability", df['avg_danceability'].mean(),     1, A),
+    ]:
+        pct = min(int((val / mx) * 100), 100)
+        st.markdown(
+            f"<div style='margin-bottom:10px;'>"
+            f"<div style='display:flex;justify-content:space-between;"
+            f"font-size:0.75rem;color:#B3B3B3;margin-bottom:3px;'>"
+            f"<span>{label}</span>"
+            f"<span style='color:{clr};font-weight:700;'>{pct}%</span>"
+            f"</div>"
+            f"<div style='background:#282828;border-radius:4px;height:3px;'>"
+            f"<div style='width:{pct}%;height:3px;background:{clr};"
+            f"border-radius:4px;'></div></div></div>",
+            unsafe_allow_html=True
+        )
 
-    feat_cols   = ['avg_tempo','avg_energy',
-                   'avg_valence','avg_instrumentalness']
-    feat_labels = ['Tempo','Energy',
-                   'Valence','Instrumental']
-    feat_maxes  = [200,1,1,1]
+    st.markdown("---")
+    st.markdown("**Quick Stats**")
+    for lbl, val, clr in [
+        ("Sessions",        str(total_sess),      G),
+        ("Avg Productivity",f"{avg_prod:.1f}/10",  B),
+        ("Avg Focus",       f"{avg_focus:.1f}/10", P),
+        ("Best Task",       best_task.title(),     A),
+    ]:
+        st.markdown(
+            f"<div style='display:flex;justify-content:space-between;"
+            f"padding:5px 0;border-bottom:1px solid #1e1e1e;'>"
+            f"<span style='font-size:0.78rem;color:#B3B3B3;'>{lbl}</span>"
+            f"<span style='font-size:0.78rem;font-weight:700;"
+            f"color:{clr};'>{val}</span></div>",
+            unsafe_allow_html=True
+        )
 
-    for fcol,flabel,fmax in zip(
-            feat_cols,feat_labels,feat_maxes):
-        val = df[fcol].mean()
-        pct = min(int((val/fmax)*100),100)
-        disp = f"{val:.0f}" if fmax==200 \
-               else f"{pct}%"
-        st.markdown(f"""
-        <div class='sp-bar-wrap'
-             style='padding:0 1rem;'>
-            <div class='sp-bar-label'>
-                <span>{flabel}</span>
-                <span>{disp}</span>
-            </div>
-            <div class='sp-bar-bg'>
-                <div class='sp-bar-fill'
-                     style='width:{pct}%;'></div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-# ── Filter ───────────────────────────────────────────────────
+# ── Filtered data ────────────────────────────────────────────
 dff = df[df['task_type'].isin(task_filter)]
 
-# ── Hero ─────────────────────────────────────────────────────
-st.markdown(f"""
-<div class='now-playing'>
-    <div class='now-playing-label'>🎵 Now Analyzing</div>
-    <div class='now-playing-title'>MoodMetric</div>
-    <div class='now-playing-sub'>
-        {total_sess} sessions tracked &nbsp;·&nbsp;
-        {avg_prod:.1f}/10 avg productivity &nbsp;·&nbsp;
-        Best at <strong style='color:#fff;'>
-        {best_task.title()}</strong>
-    </div>
-    <br>
-    <span class='genre-tag genre-tag-active'>
-        🎯 {best_feat}
-    </span>
-    <span class='genre-tag'>🏆 {best_task.title()}</span>
-    <span class='genre-tag'>📊 {total_sess} Sessions</span>
-    <span class='genre-tag'>
-        ⚡ {df['avg_tempo'].mean():.0f} BPM avg
-    </span>
-</div>
-""", unsafe_allow_html=True)
+# ════════════════════════════════════════════════════════════
+# HERO
+# ════════════════════════════════════════════════════════════
+st.markdown(
+    "<div style='background:linear-gradient("
+    "180deg,#1a5c35 0%,#0f3320 45%,#121212 100%);"
+    "padding:3rem 2.5rem 2.5rem;"
+    "margin:-1rem -2rem 1.5rem;"
+    "position:relative;overflow:hidden;'>"
+    "<div style='position:absolute;top:-50px;right:-30px;"
+    "width:320px;height:320px;"
+    "background:radial-gradient(circle,rgba(29,185,84,0.1) 0%,"
+    "transparent 65%);pointer-events:none;'></div>"
+    "<div style='font-size:0.68rem;font-weight:700;"
+    "letter-spacing:0.18em;text-transform:uppercase;"
+    "color:#1DB954;margin-bottom:0.6rem;'>"
+    "&#9679; Verified Analytics</div>"
+    "<div style='font-size:3.8rem;font-weight:900;color:#FFFFFF;"
+    "line-height:1;letter-spacing:-2px;margin-bottom:1rem;'>"
+    "MoodMetric</div>"
+    f"<div style='display:flex;align-items:center;gap:1.2rem;"
+    f"flex-wrap:wrap;margin-bottom:1.25rem;'>"
+    f"<span style='font-size:0.88rem;color:#B3B3B3;'>"
+    f"&#127911; <strong style='color:#fff;'>{total_sess}</strong> sessions</span>"
+    f"<span style='color:#535353;'>&#9679;</span>"
+    f"<span style='font-size:0.88rem;color:#B3B3B3;'>"
+    f"&#9889; <strong style='color:#fff;'>{avg_prod:.1f}/10</strong> avg productivity</span>"
+    f"<span style='color:#535353;'>&#9679;</span>"
+    f"<span style='font-size:0.88rem;color:#B3B3B3;'>"
+    f"&#127942; Best at <strong style='color:#fff;'>{best_task.title()}</strong></span>"
+    f"<span style='color:#535353;'>&#9679;</span>"
+    f"<span style='font-size:0.88rem;color:#B3B3B3;'>"
+    f"&#9835; <strong style='color:#fff;'>{avg_tempo:.0f} BPM</strong> avg</span>"
+    f"</div>"
+    f"<span style='display:inline-block;background:rgba(29,185,84,0.15);"
+    f"border:1px solid rgba(29,185,84,0.3);color:#1DB954;"
+    f"border-radius:500px;padding:4px 14px;font-size:0.78rem;"
+    f"font-weight:600;margin:3px;'>&#127919; {best_feat}</span>"
+    f"<span style='display:inline-block;background:rgba(76,158,235,0.12);"
+    f"border:1px solid rgba(76,158,235,0.25);color:#4C9EEB;"
+    f"border-radius:500px;padding:4px 14px;font-size:0.78rem;"
+    f"font-weight:600;margin:3px;'>"
+    f"&#9889; {int(avg_energy*100)}% Energy</span>"
+    f"<span style='display:inline-block;background:rgba(167,139,250,0.12);"
+    f"border:1px solid rgba(167,139,250,0.25);color:#A78BFA;"
+    f"border-radius:500px;padding:4px 14px;font-size:0.78rem;"
+    f"font-weight:600;margin:3px;'>&#127942; {best_task.title()}</span>"
+    f"<span style='display:inline-block;background:rgba(252,211,77,0.12);"
+    f"border:1px solid rgba(252,211,77,0.25);color:#FCD34D;"
+    f"border-radius:500px;padding:4px 14px;font-size:0.78rem;"
+    f"font-weight:600;margin:3px;'>&#128202; {total_sess} Sessions</span>"
+    "</div>",
+    unsafe_allow_html=True
+)
 
-# ── Stat Cards ───────────────────────────────────────────────
-c1,c2,c3,c4 = st.columns(4)
-for col,icon,val,label,badge in [
-    (c1,"🎧",str(total_sess),
-     "Sessions Logged","Active"),
-    (c2,"⚡",f"{avg_prod:.1f}",
-     "Avg Productivity","out of 10"),
-    (c3,"🎯",f"{avg_focus:.1f}",
-     "Avg Focus Score","out of 10"),
-    (c4,"🏆",best_task.title(),
-     "Best Task Type","Top performer"),
-]:
-    col.markdown(f"""
-    <div class='stat-card'>
-        <div class='stat-card-icon'>{icon}</div>
-        <div class='stat-card-value'>{val}</div>
-        <div class='stat-card-label'>{label}</div>
-        <div class='stat-card-badge'>{badge}</div>
-    </div>
-    """, unsafe_allow_html=True)
+# ── Stat cards ───────────────────────────────────────────────
+def stat_card(icon, value, label, sub, clr, bg):
+    return (
+        f"<div style='background:#181818;border:1px solid #282828;"
+        f"border-radius:10px;padding:1.3rem;position:relative;"
+        f"overflow:hidden;height:100%;'>"
+        f"<div style='position:absolute;top:0;left:0;right:0;"
+        f"height:2px;background:linear-gradient(90deg,{clr},transparent);'></div>"
+        f"<div style='width:36px;height:36px;border-radius:8px;"
+        f"background:{bg};display:flex;align-items:center;"
+        f"justify-content:center;font-size:1rem;margin-bottom:0.8rem;'>{icon}</div>"
+        f"<div style='font-size:1.9rem;font-weight:800;color:{clr};"
+        f"line-height:1;margin-bottom:0.25rem;'>{value}</div>"
+        f"<div style='font-size:0.8rem;color:#B3B3B3;font-weight:500;'>{label}</div>"
+        f"<div style='font-size:0.7rem;color:#535353;margin-top:0.25rem;'>{sub}</div>"
+        f"</div>"
+    )
+
+sc1, sc2, sc3, sc4 = st.columns(4)
+sc1.markdown(stat_card("🎧", str(total_sess),   "Sessions Logged",  "All time",          G, "rgba(29,185,84,0.12)"),  unsafe_allow_html=True)
+sc2.markdown(stat_card("⚡", f"{avg_prod:.1f}", "Avg Productivity", "Out of 10",         B, "rgba(76,158,235,0.12)"), unsafe_allow_html=True)
+sc3.markdown(stat_card("🎯", f"{avg_focus:.1f}","Avg Focus Score",  "Out of 10",         P, "rgba(167,139,250,0.12)"),unsafe_allow_html=True)
+sc4.markdown(stat_card("🏆", best_task.title(), "Best Task Type",   "Highest avg score", A, "rgba(252,211,77,0.12)"), unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# ── Tabs ─────────────────────────────────────────────────────
-tab1,tab2,tab3,tab4 = st.tabs([
-    "Analytics","Your Playlist","Predict","History"
+# ════════════════════════════════════════════════════════════
+# TABS
+# ════════════════════════════════════════════════════════════
+tab1, tab2, tab3, tab4 = st.tabs([
+    "Analytics", "Your Playlist", "Predict", "History"
 ])
 
 # ════════════════════════════════════════════════════════════
 # TAB 1 — ANALYTICS
 # ════════════════════════════════════════════════════════════
 with tab1:
-    corr_e = dff['avg_energy'].corr(
-        dff['productivity_score'])
-    corr_d = "positively" if corr_e > 0 \
-             else "negatively"
 
-    st.markdown(f"""
-    <div class='insight-card'>
-        <div class='insight-tag'>🧠 Insight</div>
-        <div class='insight-text'>
-            Your productivity is most influenced by
-            <strong style='color:#1DB954;'>{best_feat}
-            </strong>. Higher energy music {corr_d}
-            correlates with your productivity
-            (r = {corr_e:.2f}). You perform best during
-            <strong style='color:#1DB954;'>
-            {best_task.title()}</strong> sessions.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    corr_e = dff['avg_energy'].corr(dff['productivity_score'])
+    corr_v = dff['avg_valence'].corr(dff['productivity_score'])
+    dir_e  = "positively" if corr_e > 0 else "negatively"
 
-    col1,col2 = st.columns(2)
+    st.markdown(
+        f"<div style='background:#181818;border-left:3px solid #1DB954;"
+        f"border-radius:0 8px 8px 0;padding:1.1rem 1.4rem;margin-bottom:1.5rem;'>"
+        f"<div style='font-size:0.62rem;font-weight:700;letter-spacing:0.14em;"
+        f"text-transform:uppercase;color:#1DB954;margin-bottom:0.35rem;'>Key Insight</div>"
+        f"<div style='font-size:0.9rem;color:#E0E0E0;line-height:1.65;'>"
+        f"Your productivity is most influenced by "
+        f"<strong style='color:#1DB954;'>{best_feat}</strong>. "
+        f"Energy {dir_e} correlates "
+        f"(<strong style='color:#fff;'>r = {corr_e:.2f}</strong>), "
+        f"valence shows <strong style='color:#fff;'>r = {corr_v:.2f}</strong>. "
+        f"You perform best during "
+        f"<strong style='color:#1DB954;'>{best_task.title()}</strong> sessions."
+        f"</div></div>",
+        unsafe_allow_html=True
+    )
 
-    with col1:
-        st.markdown("""
-        <div class='sp-section'>
-            <span class='sp-section-title'>
-                Energy vs Productivity
-            </span>
-        </div>""", unsafe_allow_html=True)
-        fig = px.scatter(dff,
-            x='avg_energy', y='productivity_score',
-            color='task_type', size='avg_tempo',
-            trendline='ols',
-            labels={'avg_energy':'Energy',
-                    'productivity_score':'Productivity',
-                    'task_type':'Task'},
-            color_discrete_sequence=SP_COLORS)
-        fig.update_traces(
-            marker=dict(line=dict(width=0)))
-        st.plotly_chart(sp_fig(fig),
-                        use_container_width=True)
+    # ── Charts 1 & 2: Scatter ────────────────────────────────
+    st.markdown(
+        "<div style='font-size:1.15rem;font-weight:700;color:#FFFFFF;"
+        "margin-bottom:0.75rem;'>Energy &amp; Valence vs Productivity</div>",
+        unsafe_allow_html=True
+    )
 
-    with col2:
-        st.markdown("""
-        <div class='sp-section'>
-            <span class='sp-section-title'>
-                Valence vs Productivity
-            </span>
-        </div>""", unsafe_allow_html=True)
-        fig2 = px.scatter(dff,
-            x='avg_valence', y='productivity_score',
-            color='task_type',
-            size='avg_instrumentalness',
-            trendline='ols',
-            labels={'avg_valence':'Valence (Mood)',
-                    'productivity_score':'Productivity',
-                    'task_type':'Task'},
-            color_discrete_sequence=SP_COLORS)
-        st.plotly_chart(sp_fig(fig2),
-                        use_container_width=True)
+    cc1, cc2 = st.columns(2)
 
-    st.markdown("""
-    <div class='sp-section'>
-        <span class='sp-section-title'>
-            What Drives Your Productivity
-        </span>
-    </div>""", unsafe_allow_html=True)
+    with cc1:
+        fig1 = px.scatter(
+            dff,
+            x         = 'avg_energy',
+            y         = 'productivity_score',
+            color     = 'task_type',
+            size      = 'avg_tempo',
+            size_max  = 15,
+            trendline = 'ols',
+            title     = 'Energy vs Productivity',
+            labels    = {
+                'avg_energy'        : 'Energy',
+                'productivity_score': 'Productivity',
+                'task_type'         : 'Task',
+                'avg_tempo'         : 'Tempo'
+            },
+            color_discrete_sequence = PALETTE,
+            opacity   = 0.85
+        )
+        for trace in fig1.data:
+            if hasattr(trace, 'mode') and trace.mode and 'markers' in trace.mode:
+                trace.marker.line = dict(width=0)
+        st.plotly_chart(sp(fig1, h=420), use_container_width=True)
+
+    with cc2:
+        fig2 = px.scatter(
+            dff,
+            x         = 'avg_valence',
+            y         = 'productivity_score',
+            color     = 'task_type',
+            size      = 'avg_instrumentalness',
+            size_max  = 15,
+            trendline = 'ols',
+            title     = 'Valence vs Productivity',
+            labels    = {
+                'avg_valence'       : 'Valence (Mood)',
+                'productivity_score': 'Productivity',
+                'task_type'         : 'Task'
+            },
+            color_discrete_sequence = PALETTE,
+            opacity   = 0.85
+        )
+        for trace in fig2.data:
+            if hasattr(trace, 'mode') and trace.mode and 'markers' in trace.mode:
+                trace.marker.line = dict(width=0)
+        st.plotly_chart(sp(fig2, h=420), use_container_width=True)
+
+    # ── Chart 3: Feature Importance ──────────────────────────
+    st.markdown(
+        "<div style='font-size:1.15rem;font-weight:700;color:#FFFFFF;"
+        "margin:0.5rem 0 0.75rem;'>Feature Impact on Your Productivity</div>",
+        unsafe_allow_html=True
+    )
 
     imp_df = pd.DataFrame({
         'Feature'   : feat_names,
-        'Importance': model.feature_importances_
+        'Importance': model.feature_importances_.tolist()
     }).sort_values('Importance', ascending=True)
 
-    fig3 = px.bar(imp_df,
-        x='Importance', y='Feature',
-        orientation='h', color='Importance',
-        color_continuous_scale=[
-            '#0d6e32','#1DB954','#1ed760'],
-        labels={'Importance':'Impact Score'})
-    fig3.update_layout(coloraxis_showscale=False,
-                       showlegend=False)
+    fig3 = px.bar(
+        imp_df,
+        x           = 'Importance',
+        y           = 'Feature',
+        orientation = 'h',
+        title       = 'What drives your productivity most?',
+        color       = 'Feature',
+        color_discrete_sequence = PALETTE,
+        labels      = {'Importance':'Impact Score', 'Feature':''}
+    )
     fig3.update_traces(marker_line_width=0)
-    st.plotly_chart(sp_fig(fig3, height=320),
-                    use_container_width=True)
+    fig3.update_layout(showlegend=False)
+    # No legend needed here — labels are on y-axis
+    st.plotly_chart(sp_nolegend(fig3, h=340), use_container_width=True)
 
-    col3,col4 = st.columns(2)
+    # ── Charts 4 & 5: Task bar + Tempo histogram ─────────────
+    cc3, cc4 = st.columns(2)
 
-    with col3:
-        st.markdown("""
-        <div class='sp-section'>
-            <span class='sp-section-title'>
-                Score by Task Type
-            </span>
-        </div>""", unsafe_allow_html=True)
+    with cc3:
+        st.markdown(
+            "<div style='font-size:1.15rem;font-weight:700;color:#FFFFFF;"
+            "margin:0.5rem 0 0.75rem;'>Score by Task Type</div>",
+            unsafe_allow_html=True
+        )
         task_avg = dff.groupby('task_type').agg(
-            Productivity=('productivity_score','mean'),
-            Focus=('focus_score','mean')
+            Productivity = ('productivity_score','mean'),
+            Focus        = ('focus_score','mean')
         ).reset_index()
-        fig4 = px.bar(task_avg,
-            x='task_type',
-            y=['Productivity','Focus'],
-            barmode='group',
-            labels={'task_type':'Task',
-                    'value':'Score'},
-            color_discrete_map={
-                'Productivity':'#1DB954',
-                'Focus':'#535353'})
-        fig4.update_layout(yaxis_range=[0,10])
-        fig4.update_traces(marker_line_width=0)
-        st.plotly_chart(sp_fig(fig4, height=320),
-                        use_container_width=True)
 
-    with col4:
-        st.markdown("""
-        <div class='sp-section'>
-            <span class='sp-section-title'>
-                Tempo Distribution
-            </span>
-        </div>""", unsafe_allow_html=True)
-        dff2 = dff.copy()
-        dff2['productive'] = (
-            dff2['productivity_score'] >= 7)
-        fig5 = px.histogram(dff2,
-            x='avg_tempo', color='productive',
-            nbins=12, barmode='overlay',
-            opacity=0.85,
-            labels={'avg_tempo':'Tempo (BPM)',
-                    'productive':'High Productivity'},
-            color_discrete_map={
-                True:'#1DB954', False:'#535353'})
+        fig4 = go.Figure()
+        fig4.add_trace(go.Bar(
+            name              = 'Productivity',
+            x                 = task_avg['task_type'],
+            y                 = task_avg['Productivity'],
+            marker_color      = G,
+            marker_line_width = 0,
+            hovertemplate     = '<b>%{x}</b><br>Productivity: %{y:.1f}<extra></extra>'
+        ))
+        fig4.add_trace(go.Bar(
+            name              = 'Focus',
+            x                 = task_avg['task_type'],
+            y                 = task_avg['Focus'],
+            marker_color      = B,
+            marker_line_width = 0,
+            hovertemplate     = '<b>%{x}</b><br>Focus: %{y:.1f}<extra></extra>'
+        ))
+        fig4.update_layout(
+            barmode    = 'group',
+            title      = 'Avg Scores by Task',
+            yaxis_range= [0, 10]
+        )
+        # sp_bar: angled x labels + extra bottom margin for legend+labels
+        st.plotly_chart(sp_bar(fig4, h=400), use_container_width=True)
+
+    with cc4:
+        st.markdown(
+            "<div style='font-size:1.15rem;font-weight:700;color:#FFFFFF;"
+            "margin:0.5rem 0 0.75rem;'>Tempo Distribution</div>",
+            unsafe_allow_html=True
+        )
+        dff2          = dff.copy()
+        dff2['Level'] = dff2['productivity_score'].apply(
+            lambda x: 'High (7+)' if x >= 7 else 'Low (<7)')
+
+        fig5 = px.histogram(
+            dff2,
+            x       = 'avg_tempo',
+            color   = 'Level',
+            nbins   = 14,
+            barmode = 'overlay',
+            opacity = 0.82,
+            title   = 'Tempo: High vs Low Productivity',
+            labels  = {'avg_tempo':'Tempo (BPM)'},
+            color_discrete_map = {'High (7+)': G, 'Low (<7)': C}
+        )
         fig5.update_traces(marker_line_width=0)
-        st.plotly_chart(sp_fig(fig5, height=320),
-                        use_container_width=True)
+        st.plotly_chart(sp(fig5, h=400), use_container_width=True)
+
+    # ── Chart 6: Radar ───────────────────────────────────────
+    st.markdown(
+        "<div style='font-size:1.15rem;font-weight:700;color:#FFFFFF;"
+        "margin:0.5rem 0 0.75rem;'>Audio Fingerprint by Task Type</div>",
+        unsafe_allow_html=True
+    )
+
+    radar_cols = ['avg_energy','avg_valence',
+                  'avg_danceability','avg_acousticness',
+                  'avg_instrumentalness']
+    radar_labs = ['Energy','Valence',
+                  'Danceability','Acousticness','Instrumentalness']
+
+    clr_map = {
+        'coding' : (G,  29,  185, 84),
+        'reading': (B,  76,  158, 235),
+        'writing': (P,  167, 139, 250),
+        'design' : (A,  252, 211, 77),
+        'other'  : (C,  255, 107, 107),
+    }
+
+    fig6 = go.Figure()
+    for i, (task_name, grp) in enumerate(dff.groupby('task_type')):
+        vals = [grp[c].mean() for c in radar_cols]
+        vals.append(vals[0])
+        labs = radar_labs + [radar_labs[0]]
+
+        if task_name in clr_map:
+            hex_c, rr, gg, bb = clr_map[task_name]
+        else:
+            hex_c = PALETTE[i % len(PALETTE)]
+            rr = int(hex_c[1:3], 16)
+            gg = int(hex_c[3:5], 16)
+            bb = int(hex_c[5:7], 16)
+
+        fig6.add_trace(go.Scatterpolar(
+            r         = vals,
+            theta     = labs,
+            fill      = 'toself',
+            name      = task_name.title(),
+            line      = dict(color=hex_c, width=2),
+            fillcolor = f'rgba({rr},{gg},{bb},0.1)'
+        ))
+
+    fig6.update_layout(
+        plot_bgcolor  = '#1a1a1a',
+        paper_bgcolor = '#181818',
+        height        = 460,
+        title         = dict(
+            text      = 'Audio features per task type',
+            font      = dict(color='#FFFFFF', size=14, family='Figtree'),
+            y         = 0.97,
+            x         = 0.5,
+            xanchor   = 'center'
+        ),
+        margin        = dict(t=60, b=20, l=60, r=60),
+        polar         = dict(
+            bgcolor     = '#1a1a1a',
+            radialaxis  = dict(
+                visible   = True,
+                range     = [0, 1],
+                gridcolor = '#2a2a2a',
+                linecolor = '#2a2a2a',
+                tickfont  = dict(color='#535353', size=9, family='Figtree'),
+                tickmode  = 'linear',
+                tick0     = 0,
+                dtick     = 0.25
+            ),
+            angularaxis = dict(
+                gridcolor = '#2a2a2a',
+                linecolor = '#2a2a2a',
+                tickfont  = dict(color='#B3B3B3', size=11, family='Figtree')
+            )
+        ),
+        legend = dict(
+            font    = dict(color='#B3B3B3', size=11, family='Figtree'),
+            bgcolor = 'rgba(0,0,0,0)',
+            orientation = 'h',
+            yanchor     = 'top',
+            y           = -0.05,
+            xanchor     = 'center',
+            x           = 0.5
+        )
+    )
+    st.plotly_chart(fig6, use_container_width=True)
 
 # ════════════════════════════════════════════════════════════
 # TAB 2 — PLAYLIST
 # ════════════════════════════════════════════════════════════
 with tab2:
-    st.markdown("""
-    <div class='sp-section'>
-        <span class='sp-section-title'>
-            🎵 Build Your Focus Playlist
-        </span>
-    </div>""", unsafe_allow_html=True)
-
-    col1,col2,col3 = st.columns([1.5,1,1])
-    with col1:
-        task = st.selectbox("Select Activity",
-            ["coding","reading","writing",
-             "design","other"])
-    with col2:
-        num_songs = st.slider(
-            "Number of songs", 5, 30, 15)
-    with col3:
-        st.markdown("<br>", unsafe_allow_html=True)
-        generate = st.button("▶  Generate Playlist")
-
-    profiles_info = {
-        'coding' :[('Instrumentalness','70-100%'),
-                   ('Energy','30-70%'),
-                   ('Tempo','80-120 BPM')],
-        'reading':[('Instrumentalness','60-100%'),
-                   ('Energy','10-50%'),
-                   ('Tempo','60-95 BPM')],
-        'writing':[('Instrumentalness','30-90%'),
-                   ('Energy','20-60%'),
-                   ('Tempo','70-110 BPM')],
-        'design' :[('Instrumentalness','30-80%'),
-                   ('Energy','40-80%'),
-                   ('Tempo','90-130 BPM')],
-        'other'  :[('Instrumentalness','30-90%'),
-                   ('Energy','30-70%'),
-                   ('Tempo','75-115 BPM')]
-    }
-
-    pills = " ".join([
-        f"<span class='genre-tag'>{k}: "
-        f"<strong style='color:#1DB954;'>{v}"
-        f"</strong></span>"
-        for k,v in profiles_info[task]
-    ])
     st.markdown(
-        f"<div style='margin:0.5rem 0 1.5rem;'>"
-        f"{pills}</div>",
-        unsafe_allow_html=True)
+        "<div style='font-size:1.4rem;font-weight:700;color:#FFFFFF;"
+        "margin-bottom:1.25rem;'>Build Your Focus Playlist</div>",
+        unsafe_allow_html=True
+    )
 
-    if generate:
-        ranges = {
-            'coding' :{'instrumentalness':(0.4,1.0),
-                       'energy':(0.3,0.7),
-                       'tempo':(80,120)},
-            'reading':{'instrumentalness':(0.6,1.0),
-                       'energy':(0.1,0.5),
-                       'tempo':(60,95)},
-            'writing':{'instrumentalness':(0.3,0.9),
-                       'energy':(0.2,0.6),
-                       'tempo':(70,110)},
-            'design' :{'instrumentalness':(0.3,0.8),
-                       'energy':(0.4,0.8),
-                       'tempo':(90,130)},
-            'other'  :{'instrumentalness':(0.3,0.9),
-                       'energy':(0.3,0.7),
-                       'tempo':(75,115)}
+    pc1, pc2, pc3 = st.columns([2, 1, 1])
+    with pc1:
+        task = st.selectbox("Activity",
+            ["coding","reading","writing","design","other"])
+    with pc2:
+        num_songs = st.slider("Songs", 5, 30, 15)
+    with pc3:
+        st.markdown("<br>", unsafe_allow_html=True)
+        gen_btn = st.button("Generate Playlist")
+
+    profiles = {
+        'coding' : [('Instrumental','70-100%',G),('Energy','30-70%',B),('Tempo','80-120 BPM',P)],
+        'reading': [('Instrumental','60-100%',G),('Energy','10-50%',B),('Tempo','60-95 BPM',P)],
+        'writing': [('Instrumental','30-90%',G),('Energy','20-60%',B),('Tempo','70-110 BPM',P)],
+        'design' : [('Instrumental','30-80%',G),('Energy','40-80%',B),('Tempo','90-130 BPM',P)],
+        'other'  : [('Instrumental','30-90%',G),('Energy','30-70%',B),('Tempo','75-115 BPM',P)],
+    }
+    chips = []
+    for k, v, clr in profiles[task]:
+        rr = int(clr[1:3], 16); gg = int(clr[3:5], 16); bb = int(clr[5:7], 16)
+        chips.append(
+            f"<span style='display:inline-block;"
+            f"background:rgba({rr},{gg},{bb},0.12);"
+            f"border:1px solid rgba({rr},{gg},{bb},0.3);"
+            f"color:{clr};border-radius:500px;"
+            f"padding:4px 12px;font-size:0.78rem;"
+            f"font-weight:600;margin:3px;'>{k}: {v}</span>"
+        )
+    st.markdown(
+        "<div style='margin:0.75rem 0 1.5rem;'>" + "".join(chips) + "</div>",
+        unsafe_allow_html=True
+    )
+
+    if gen_btn:
+        rngs = {
+            'coding' : {'instrumentalness':(0.4,1.0),'energy':(0.3,0.7),'tempo':(80,120)},
+            'reading': {'instrumentalness':(0.6,1.0),'energy':(0.1,0.5),'tempo':(60,95)},
+            'writing': {'instrumentalness':(0.3,0.9),'energy':(0.2,0.6),'tempo':(70,110)},
+            'design' : {'instrumentalness':(0.3,0.8),'energy':(0.4,0.8),'tempo':(90,130)},
+            'other'  : {'instrumentalness':(0.3,0.9),'energy':(0.3,0.7),'tempo':(75,115)},
         }
-        r    = ranges[task]
+        r    = rngs[task]
         mask = (
-            df_spotify['instrumentalness'].between(
-                *r['instrumentalness']) &
-            df_spotify['energy'].between(
-                *r['energy']) &
+            df_spotify['instrumentalness'].between(*r['instrumentalness']) &
+            df_spotify['energy'].between(*r['energy']) &
             df_spotify['tempo'].between(*r['tempo'])
         )
-        playlist = df_spotify[mask][
-            ['track_name','artists',
-             'tempo','energy','valence',
-             'instrumentalness']
-        ].drop_duplicates(
-            subset='track_name'
-        ).head(num_songs)
+        pl = df_spotify[mask][
+            ['track_name','artists','tempo','energy','valence','instrumentalness']
+        ].drop_duplicates(subset='track_name').head(num_songs)
 
-        st.markdown(f"""
-        <div style='display:flex;align-items:center;
-                    gap:1rem;margin:1.5rem 0 0.5rem;'>
-            <div style='width:80px;height:80px;
-                        background:linear-gradient(
-                            135deg,#1DB954,#169e47);
-                        border-radius:4px;
-                        display:flex;align-items:center;
-                        justify-content:center;
-                        font-size:2rem;flex-shrink:0;'>
-                🎵
-            </div>
-            <div>
-                <div style='font-size:0.65rem;
-                            font-weight:700;
-                            letter-spacing:0.12em;
-                            text-transform:uppercase;
-                            color:#B3B3B3;'>
-                    Playlist
-                </div>
-                <div style='font-size:1.8rem;
-                            font-weight:800;
-                            color:#FFFFFF;
-                            line-height:1.1;'>
-                    Focus: {task.title()}
-                </div>
-                <div style='font-size:0.85rem;
-                            color:#B3B3B3;
-                            margin-top:4px;'>
-                    {len(playlist)} songs curated
-                    by MoodMetric
-                </div>
-            </div>
-        </div>
-        <hr class='sp-divider'>
-        <div style='display:flex;padding:0 1rem 0.5rem;
-                    font-size:0.65rem;font-weight:700;
-                    letter-spacing:0.1em;
-                    text-transform:uppercase;
-                    color:#B3B3B3;
-                    border-bottom:1px solid #282828;
-                    margin-bottom:0.5rem;'>
-            <span style='min-width:30px;'>#</span>
-            <span style='flex:1;'>Title</span>
-            <span style='width:80px;
-                         text-align:center;'>BPM</span>
-            <span style='width:80px;
-                         text-align:center;'>Energy</span>
-            <span style='width:80px;
-                         text-align:center;'>Mood</span>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(
+            f"<div style='display:flex;align-items:flex-end;gap:1.25rem;"
+            f"padding:1.5rem 0 1rem;border-bottom:1px solid #282828;"
+            f"margin-bottom:0.5rem;'>"
+            f"<div style='width:82px;height:82px;"
+            f"background:linear-gradient(135deg,#1DB954,#0d6e32);"
+            f"border-radius:6px;display:flex;align-items:center;"
+            f"justify-content:center;font-size:2rem;flex-shrink:0;'>"
+            f"&#127925;</div>"
+            f"<div>"
+            f"<div style='font-size:0.62rem;font-weight:700;"
+            f"letter-spacing:0.14em;text-transform:uppercase;"
+            f"color:#B3B3B3;margin-bottom:0.2rem;'>Playlist</div>"
+            f"<div style='font-size:1.8rem;font-weight:800;"
+            f"color:#FFFFFF;line-height:1.1;margin-bottom:0.3rem;'>"
+            f"Focus: {task.title()}</div>"
+            f"<div style='font-size:0.82rem;color:#B3B3B3;'>"
+            f"MoodMetric &nbsp;&middot;&nbsp; {len(pl)} songs</div>"
+            f"</div></div>",
+            unsafe_allow_html=True
+        )
 
-        for i,(_, row) in enumerate(
-                playlist.iterrows(), 1):
-            e_pct = int(row['energy']  * 100)
-            v_pct = int(row['valence'] * 100)
-            e_cls = "track-pill-green" \
-                    if e_pct < 70 else ""
-            st.markdown(f"""
-            <div class='track-row'>
-                <span class='track-number'>{i}</span>
-                <div class='track-info'>
-                    <div class='track-name'>
-                        {row['track_name']}
-                    </div>
-                    <div class='track-artist'>
-                        {row['artists']}
-                    </div>
-                </div>
-                <div style='width:80px;
-                            text-align:center;'>
-                    <span class='track-pill'>
-                        {int(row['tempo'])} BPM
-                    </span>
-                </div>
-                <div style='width:80px;
-                            text-align:center;'>
-                    <span class='track-pill {e_cls}'>
-                        {e_pct}%
-                    </span>
-                </div>
-                <div style='width:80px;
-                            text-align:center;'>
-                    <span class='track-pill'>
-                        {v_pct}%
-                    </span>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown(
+            "<div style='display:grid;"
+            "grid-template-columns:28px 1fr 72px 90px 70px 100px;"
+            "gap:8px;padding:5px 10px;"
+            "font-size:0.62rem;font-weight:700;"
+            "letter-spacing:0.12em;text-transform:uppercase;"
+            "color:#B3B3B3;border-bottom:1px solid #282828;"
+            "margin-bottom:3px;'>"
+            "<span>#</span><span>Title</span>"
+            "<span style='text-align:center;'>BPM</span>"
+            "<span style='text-align:center;'>Energy</span>"
+            "<span style='text-align:center;'>Mood</span>"
+            "<span style='text-align:center;'>Type</span>"
+            "</div>",
+            unsafe_allow_html=True
+        )
+
+        for idx, (_, row) in enumerate(pl.iterrows(), 1):
+            e   = float(row['energy'])
+            v   = float(row['valence'])
+            ins = float(row['instrumentalness'])
+            bpm = int(row['tempo'])
+
+            if e < 0.4:
+                e_bg, e_cl, e_txt = 'rgba(29,185,84,0.15)',  G, f"{int(e*100)}% Low"
+            elif e < 0.7:
+                e_bg, e_cl, e_txt = 'rgba(76,158,235,0.15)', B, f"{int(e*100)}% Mid"
+            else:
+                e_bg, e_cl, e_txt = 'rgba(252,211,77,0.15)', A, f"{int(e*100)}% High"
+
+            if v < 0.4:
+                v_bg, v_cl, v_txt = 'rgba(167,139,250,0.15)', P, f"{int(v*100)}%"
+            elif v < 0.7:
+                v_bg, v_cl, v_txt = 'rgba(76,158,235,0.15)',  B, f"{int(v*100)}%"
+            else:
+                v_bg, v_cl, v_txt = 'rgba(252,211,77,0.15)',  A, f"{int(v*100)}%"
+
+            if ins > 0.6:
+                t_bg, t_cl, t_txt = 'rgba(29,185,84,0.15)',   G, 'Instrumental'
+            else:
+                t_bg, t_cl, t_txt = 'rgba(167,139,250,0.15)', P, 'Vocal'
+
+            def pk(bg, cl, txt):
+                return (f"<span style='background:{bg};color:{cl};"
+                        f"border-radius:500px;padding:3px 8px;"
+                        f"font-size:0.7rem;font-weight:600;"
+                        f"white-space:nowrap;'>{txt}</span>")
+
+            st.markdown(
+                f"<div style='display:grid;"
+                f"grid-template-columns:28px 1fr 72px 90px 70px 100px;"
+                f"gap:8px;align-items:center;padding:7px 10px;"
+                f"border-radius:5px;margin:1px 0;'>"
+                f"<span style='font-size:0.82rem;color:#B3B3B3;text-align:center;'>{idx}</span>"
+                f"<div style='overflow:hidden;'>"
+                f"<div style='font-size:0.88rem;font-weight:600;color:#FFFFFF;"
+                f"white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>"
+                f"{str(row['track_name'])[:34]}</div>"
+                f"<div style='font-size:0.73rem;color:#B3B3B3;margin-top:1px;"
+                f"white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>"
+                f"{str(row['artists'])[:24]}</div></div>"
+                f"<div style='text-align:center;'>"
+                f"<span style='background:#282828;color:#FFFFFF;border-radius:500px;"
+                f"padding:3px 8px;font-size:0.7rem;font-weight:500;'>{bpm}</span></div>"
+                f"<div style='text-align:center;'>{pk(e_bg,e_cl,e_txt)}</div>"
+                f"<div style='text-align:center;'>{pk(v_bg,v_cl,v_txt)}</div>"
+                f"<div style='text-align:center;'>{pk(t_bg,t_cl,t_txt)}</div>"
+                f"</div>",
+                unsafe_allow_html=True
+            )
 
 # ════════════════════════════════════════════════════════════
 # TAB 3 — PREDICT
 # ════════════════════════════════════════════════════════════
 with tab3:
-    st.markdown("""
-    <div class='sp-section'>
-        <span class='sp-section-title'>
-            🔮 Predict Your Productivity Score
-        </span>
-    </div>
-    <p style='font-size:0.9rem;color:#B3B3B3;
-              margin-bottom:2rem;'>
-        Adjust audio feature sliders to match the music
-        you plan to listen to and get your predicted
-        productivity score instantly.
-    </p>""", unsafe_allow_html=True)
+    st.markdown(
+        "<div style='font-size:1.4rem;font-weight:700;color:#FFFFFF;"
+        "margin-bottom:0.5rem;'>Predict Your Productivity Score</div>"
+        "<p style='font-size:0.88rem;color:#B3B3B3;line-height:1.65;"
+        "margin-bottom:2rem;'>Set the audio features of music you plan "
+        "to listen to. The model predicts your productivity score based "
+        "on your personal session history.</p>",
+        unsafe_allow_html=True
+    )
 
-    col1,col2,col3 = st.columns(3)
+    ps1, ps2, ps3 = st.columns(3)
+    with ps1:
+        st.markdown(
+            f"<div style='font-size:0.7rem;font-weight:700;"
+            f"letter-spacing:0.14em;text-transform:uppercase;"
+            f"color:{G};margin-bottom:0.5rem;'>Rhythm</div>",
+            unsafe_allow_html=True)
+        tempo   = st.slider("Tempo (BPM)",   60, 200, 100)
+        energy  = st.slider("Energy",        0.0, 1.0, 0.5, step=0.01)
 
-    with col1:
-        st.markdown("""
-        <div style='font-size:0.65rem;font-weight:700;
-                    letter-spacing:0.12em;
-                    text-transform:uppercase;
-                    color:#B3B3B3;margin-bottom:1rem;'>
-            Rhythm
-        </div>""", unsafe_allow_html=True)
-        tempo  = st.slider("Tempo (BPM)",
-                            60,200,100)
-        energy = st.slider("Energy",
-                            0.0,1.0,0.5,step=0.01)
+    with ps2:
+        st.markdown(
+            f"<div style='font-size:0.7rem;font-weight:700;"
+            f"letter-spacing:0.14em;text-transform:uppercase;"
+            f"color:{B};margin-bottom:0.5rem;'>Mood</div>",
+            unsafe_allow_html=True)
+        valence          = st.slider("Valence",          0.0, 1.0, 0.5, step=0.01)
+        instrumentalness = st.slider("Instrumentalness", 0.0, 1.0, 0.5, step=0.01)
 
-    with col2:
-        st.markdown("""
-        <div style='font-size:0.65rem;font-weight:700;
-                    letter-spacing:0.12em;
-                    text-transform:uppercase;
-                    color:#B3B3B3;margin-bottom:1rem;'>
-            Mood
-        </div>""", unsafe_allow_html=True)
-        valence          = st.slider("Valence",
-                                      0.0,1.0,0.5,
-                                      step=0.01)
-        instrumentalness = st.slider(
-            "Instrumentalness",0.0,1.0,0.5,step=0.01)
-
-    with col3:
-        st.markdown("""
-        <div style='font-size:0.65rem;font-weight:700;
-                    letter-spacing:0.12em;
-                    text-transform:uppercase;
-                    color:#B3B3B3;margin-bottom:1rem;'>
-            Texture
-        </div>""", unsafe_allow_html=True)
-        danceability = st.slider("Danceability",
-                                  0.0,1.0,0.5,
-                                  step=0.01)
-        acousticness = st.slider("Acousticness",
-                                  0.0,1.0,0.5,
-                                  step=0.01)
+    with ps3:
+        st.markdown(
+            f"<div style='font-size:0.7rem;font-weight:700;"
+            f"letter-spacing:0.14em;text-transform:uppercase;"
+            f"color:{P};margin-bottom:0.5rem;'>Texture</div>",
+            unsafe_allow_html=True)
+        danceability = st.slider("Danceability", 0.0, 1.0, 0.5, step=0.01)
+        acousticness = st.slider("Acousticness", 0.0, 1.0, 0.5, step=0.01)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    col_btn,_ = st.columns([1,3])
-    with col_btn:
-        predict_btn = st.button(
-            "▶  Predict Score")
+    bc, _ = st.columns([1, 4])
+    with bc:
+        pred_btn = st.button("Predict Score")
 
-    if predict_btn:
+    if pred_btn:
         inp  = pd.DataFrame([{
             'avg_tempo'           : tempo,
             'avg_energy'          : energy,
@@ -918,274 +823,229 @@ with tab3:
             'avg_danceability'    : danceability,
             'avg_acousticness'    : acousticness
         }])
-        pred = model.predict(inp)[0]
-        pred = round(min(max(pred,1),10),1)
+        pred = float(model.predict(inp)[0])
+        pred = round(min(max(pred, 1), 10), 1)
 
         if pred >= 7:
-            sc = '#1DB954'
-            status = '✅ High Productivity Zone!'
-            desc   = ('This music profile is great '
-                      'for your focus sessions!')
+            sc = G; ico = '✅'; stat = 'High Productivity Zone'
+            desc = 'Great. This profile aligns with your best sessions.'
         elif pred >= 5:
-            sc = '#ffa500'
-            status = '⚠️  Moderate Productivity'
-            desc   = ('Decent focus expected. Try '
-                      'increasing instrumentalness.')
+            sc = A; ico = '⚡'; stat = 'Moderate Productivity'
+            desc = 'Decent focus expected. Try raising instrumentalness.'
         else:
-            sc = '#e8450a'
-            status = '❌ Low Productivity Zone'
-            desc   = ('This music may distract you. '
-                      'Try calmer instrumental tracks.')
+            sc = C; ico = '⚠️'; stat = 'Low Productivity Zone'
+            desc = 'This may distract. Try calmer, instrumental tracks.'
 
-        res_col,gauge_col = st.columns([1,1])
+        rc, gc = st.columns(2)
 
-        with res_col:
-            st.markdown(f"""
-            <div class='pred-card'>
-                <div style='font-size:0.65rem;
-                            font-weight:700;
-                            letter-spacing:0.15em;
-                            text-transform:uppercase;
-                            color:#B3B3B3;
-                            margin-bottom:0.5rem;'>
-                    Predicted Score
-                </div>
-                <div class='pred-score'
-                     style='color:{sc};'>{pred}</div>
-                <div class='pred-label'>out of 10</div>
-                <hr class='sp-divider'>
-                <div style='font-size:1rem;
-                            font-weight:700;
-                            color:{sc};
-                            margin-bottom:0.4rem;'>
-                    {status}
-                </div>
-                <div style='font-size:0.85rem;
-                            color:#B3B3B3;'>
-                    {desc}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        with rc:
+            st.markdown(
+                f"<div style='background:#181818;border:1px solid #282828;"
+                f"border-radius:12px;padding:2.5rem 2rem;text-align:center;'>"
+                f"<div style='font-size:0.65rem;font-weight:700;"
+                f"letter-spacing:0.16em;text-transform:uppercase;"
+                f"color:#535353;margin-bottom:0.75rem;'>Predicted Score</div>"
+                f"<div style='font-size:6rem;font-weight:900;line-height:1;"
+                f"letter-spacing:-3px;color:{sc};'>{pred}</div>"
+                f"<div style='font-size:1.1rem;color:#535353;margin-bottom:1.25rem;'>/ 10</div>"
+                f"<hr style='border:none;border-top:1px solid #282828;margin:0 0 1rem;'>"
+                f"<div style='font-size:1rem;font-weight:700;color:{sc};"
+                f"margin-bottom:0.4rem;'>{ico} {stat}</div>"
+                f"<div style='font-size:0.84rem;color:#B3B3B3;line-height:1.6;'>{desc}</div>"
+                f"</div>",
+                unsafe_allow_html=True
+            )
 
-        with gauge_col:
+        with gc:
             gauge = go.Figure(go.Indicator(
-                mode  = "gauge+number",
-                value = pred,
-                title = {'text':'Score',
-                         'font':{'color':'#B3B3B3',
-                                  'family':'Figtree',
-                                  'size':14}},
-                number = {'font':{'color':sc,
-                                   'family':'Figtree',
-                                   'size':56},
+                mode   = "gauge+number",
+                value  = pred,
+                title  = {'text':'Score',
+                          'font':{'color':'#B3B3B3','family':'Figtree','size':13}},
+                number = {'font':{'color':sc,'family':'Figtree','size':52},
                           'suffix':'/10'},
-                gauge = {
-                    'axis':{
-                        'range':[0,10],
-                        'tickcolor':'#535353',
-                        'tickfont':{'color':'#535353'}
-                    },
-                    'bar':{'color':sc,'thickness':0.2},
-                    'bgcolor':'rgba(0,0,0,0)',
-                    'bordercolor':'rgba(0,0,0,0)',
-                    'steps':[
-                        {'range':[0,4],
-                         'color':'#1a0a00'},
-                        {'range':[4,7],
-                         'color':'#1a1000'},
-                        {'range':[7,10],
-                         'color':'#001a08'}
+                gauge  = {
+                    'axis': {'range':[0,10],
+                             'tickfont':{'color':'#535353','family':'Figtree'}},
+                    'bar' : {'color':sc,'thickness':0.2},
+                    'bgcolor'    : 'rgba(0,0,0,0)',
+                    'bordercolor': 'rgba(0,0,0,0)',
+                    'steps': [
+                        {'range':[0,4],  'color':'rgba(255,107,107,0.08)'},
+                        {'range':[4,7],  'color':'rgba(252,211,77,0.08)'},
+                        {'range':[7,10], 'color':'rgba(29,185,84,0.08)'}
                     ],
-                    'threshold':{
-                        'line':{'color':sc,'width':3},
-                        'value':pred
-                    }
+                    'threshold': {'line':{'color':sc,'width':2},'value':pred}
                 }
             ))
             gauge.update_layout(
                 paper_bgcolor = '#181818',
-                height        = 320,
-                margin        = dict(
-                    t=60,b=20,l=30,r=30)
+                height        = 310,
+                margin        = dict(t=50, b=20, l=30, r=30),
+                font          = dict(family='Figtree', color='#B3B3B3')
             )
-            st.plotly_chart(gauge,
-                            use_container_width=True)
+            st.plotly_chart(gauge, use_container_width=True)
 
-        st.markdown("""
-        <div class='sp-section'>
-            <span class='sp-section-title'>
-                Input Breakdown
-            </span>
-        </div>""", unsafe_allow_html=True)
-
-        feat_vals = [tempo/200,energy,valence,
-                     instrumentalness,
-                     danceability,acousticness]
-        feat_labs = ['Tempo','Energy','Valence',
-                     'Instrumental',
-                     'Danceability','Acousticness']
-        for lab,val in zip(feat_labs,feat_vals):
-            pct = int(val*100)
-            st.markdown(f"""
-            <div class='sp-bar-wrap'>
-                <div class='sp-bar-label'>
-                    <span>{lab}</span>
-                    <span>{pct}%</span>
-                </div>
-                <div class='sp-bar-bg'>
-                    <div class='sp-bar-fill'
-                         style='width:{pct}%;'>
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown(
+            "<div style='font-size:1.1rem;font-weight:700;color:#FFFFFF;"
+            "margin:1.5rem 0 0.75rem;'>Your Input Audio Profile</div>",
+            unsafe_allow_html=True
+        )
+        for bname, bval, bclr in [
+            ('Tempo',           tempo / 200,   G),
+            ('Energy',          energy,        B),
+            ('Valence',         valence,       P),
+            ('Instrumentalness',instrumentalness, A),
+            ('Danceability',    danceability,  T),
+            ('Acousticness',    acousticness,  C),
+        ]:
+            pct = int(bval * 100)
+            st.markdown(
+                f"<div style='display:flex;align-items:center;gap:12px;margin:7px 0;'>"
+                f"<span style='font-size:0.8rem;color:#B3B3B3;min-width:115px;"
+                f"text-align:right;font-weight:500;'>{bname}</span>"
+                f"<div style='flex:1;background:#282828;border-radius:4px;height:4px;'>"
+                f"<div style='width:{pct}%;height:4px;background:{bclr};"
+                f"border-radius:4px;'></div></div>"
+                f"<span style='font-size:0.78rem;color:{bclr};min-width:34px;"
+                f"text-align:right;font-weight:700;'>{pct}%</span></div>",
+                unsafe_allow_html=True
+            )
 
 # ════════════════════════════════════════════════════════════
 # TAB 4 — HISTORY
 # ════════════════════════════════════════════════════════════
 with tab4:
-    st.markdown("""
-    <div class='sp-section'>
-        <span class='sp-section-title'>
-            📋 Session History
-        </span>
-    </div>""", unsafe_allow_html=True)
+    hc1, hc2 = st.columns(2)
+    with hc1:
+        tasks    = ['All'] + df['task_type'].unique().tolist()
+        selected = st.selectbox("Filter by Task", tasks)
+    with hc2:
+        min_sc = st.slider("Min Productivity Score", 1, 10, 1)
 
-    col1,col2 = st.columns([1,1])
-    with col1:
-        tasks    = ['All'] + \
-                   df['task_type'].unique().tolist()
-        selected = st.selectbox(
-            "Filter by Task", tasks)
-    with col2:
-        min_score = st.slider(
-            "Min Productivity Score",1,10,1)
-
-    filtered = df.copy()
+    flt = df.copy()
     if selected != 'All':
-        filtered = filtered[
-            filtered['task_type'] == selected]
-    filtered = filtered[
-        filtered['productivity_score'] >= min_score]
+        flt = flt[flt['task_type'] == selected]
+    flt = flt[flt['productivity_score'] >= min_sc]
 
-    mc1,mc2,mc3,mc4 = st.columns(4)
-    for col,val,lab in [
-        (mc1, len(filtered),        "Sessions"),
-        (mc2, f"{filtered['productivity_score'].mean():.1f}",
-              "Avg Productivity"),
-        (mc3, f"{filtered['focus_score'].mean():.1f}",
-              "Avg Focus"),
-        (mc4, f"{filtered['avg_tempo'].mean():.0f} BPM",
-              "Avg Tempo"),
+    m1, m2, m3, m4 = st.columns(4)
+    for col, val, lbl, clr in [
+        (m1, str(len(flt)),                             "Sessions",        G),
+        (m2, f"{flt['productivity_score'].mean():.1f}", "Avg Productivity", B),
+        (m3, f"{flt['focus_score'].mean():.1f}",        "Avg Focus",       P),
+        (m4, f"{flt['avg_tempo'].mean():.0f} BPM",      "Avg Tempo",       A),
     ]:
-        col.markdown(f"""
-        <div class='stat-card'>
-            <div class='stat-card-value'
-                 style='font-size:1.5rem;'>
-                {val}
-            </div>
-            <div class='stat-card-label'>{lab}</div>
-        </div>
-        """, unsafe_allow_html=True)
+        col.markdown(
+            f"<div style='background:#181818;border:1px solid #282828;"
+            f"border-radius:8px;padding:1rem 1.1rem;'>"
+            f"<div style='font-size:1.55rem;font-weight:800;color:{clr};"
+            f"line-height:1;margin-bottom:0.2rem;'>{val}</div>"
+            f"<div style='font-size:0.78rem;color:#B3B3B3;'>{lbl}</div>"
+            f"</div>",
+            unsafe_allow_html=True
+        )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    fig6 = px.line(
-        filtered.reset_index(),
-        x       = filtered.reset_index().index,
-        y       = ['productivity_score','focus_score'],
-        markers = True,
-        title   = 'Productivity & Focus Over Time',
-        labels  = {'value':'Score','x':'Session #',
-                   'variable':'Metric'},
-        color_discrete_map = {
-            'productivity_score':'#1DB954',
-            'focus_score':'#535353'
-        }
+    st.markdown(
+        "<div style='font-size:1.15rem;font-weight:700;color:#FFFFFF;"
+        "margin-bottom:0.75rem;'>Productivity &amp; Focus Over Time</div>",
+        unsafe_allow_html=True
     )
-    fig6.update_layout(yaxis_range=[0,10])
-    st.plotly_chart(sp_fig(fig6),
-                    use_container_width=True)
 
-    st.markdown("""
-    <div style='display:flex;padding:0 1rem 0.5rem;
-                font-size:0.65rem;font-weight:700;
-                letter-spacing:0.1em;
-                text-transform:uppercase;
-                color:#B3B3B3;
-                border-bottom:1px solid #282828;
-                margin:1rem 0 0.5rem;'>
-        <span style='min-width:30px;'>#</span>
-        <span style='flex:1;'>Song / Task</span>
-        <span style='width:100px;text-align:center;'>
-            Tempo</span>
-        <span style='width:100px;text-align:center;'>
-            Energy</span>
-        <span style='width:100px;text-align:center;'>
-            Productivity</span>
-        <span style='width:80px;text-align:center;'>
-            Focus</span>
-    </div>
-    """, unsafe_allow_html=True)
+    fig7 = go.Figure()
+    idx_list = list(range(len(flt)))
+    fig7.add_trace(go.Scatter(
+        x    = idx_list,
+        y    = flt['productivity_score'].values.tolist(),
+        name = 'Productivity',
+        mode = 'lines+markers',
+        line = dict(color=G, width=2.5),
+        marker = dict(color=G, size=7, line=dict(color='#121212', width=1.5)),
+        hovertemplate = 'Session %{x}<br>Productivity: %{y:.1f}<extra></extra>'
+    ))
+    fig7.add_trace(go.Scatter(
+        x    = idx_list,
+        y    = flt['focus_score'].values.tolist(),
+        name = 'Focus',
+        mode = 'lines+markers',
+        line = dict(color=B, width=2.5, dash='dot'),
+        marker = dict(color=B, size=7, line=dict(color='#121212', width=1.5)),
+        hovertemplate = 'Session %{x}<br>Focus: %{y:.1f}<extra></extra>'
+    ))
+    fig7.update_layout(title='Session performance over time', yaxis_range=[0, 10])
+    st.plotly_chart(sp(fig7), use_container_width=True)
 
-    for i,(_, row) in enumerate(
-            filtered.head(20).iterrows(), 1):
-        prod  = row['productivity_score']
-        focus = row['focus_score']
-        p_col = '#1DB954' if prod >= 7 \
-                else '#B3B3B3'
-        song  = str(row.get('song1','-'))
+    st.markdown(
+        "<div style='font-size:1.15rem;font-weight:700;color:#FFFFFF;"
+        "margin:0.5rem 0 0.75rem;'>All Sessions</div>"
+        "<div style='display:grid;"
+        "grid-template-columns:26px 1fr 80px 80px 80px 70px;"
+        "gap:8px;padding:5px 10px;"
+        "font-size:0.62rem;font-weight:700;"
+        "letter-spacing:0.12em;text-transform:uppercase;"
+        "color:#B3B3B3;border-bottom:1px solid #282828;margin-bottom:3px;'>"
+        "<span>#</span><span>Song &middot; Task</span>"
+        "<span style='text-align:center;'>Tempo</span>"
+        "<span style='text-align:center;'>Energy</span>"
+        "<span style='text-align:center;'>Score</span>"
+        "<span style='text-align:center;'>Focus</span>"
+        "</div>",
+        unsafe_allow_html=True
+    )
+
+    for i, (_, row) in enumerate(flt.head(25).iterrows(), 1):
+        prod  = float(row['productivity_score'])
+        focus = float(row['focus_score'])
+        bpm   = float(row['avg_tempo'])
+        eng   = float(row['avg_energy'])
+        song  = str(row.get('song1', '—'))
         if pd.isna(row.get('song1')):
-            song = '-'
-        st.markdown(f"""
-        <div class='track-row'>
-            <span class='track-number'>{i}</span>
-            <div class='track-info'>
-                <div class='track-name'
-                     style='font-size:0.9rem;'>
-                    {song[:45]}
-                </div>
-                <div class='track-artist'>
-                    {row['task_type'].title()}
-                    &nbsp;·&nbsp; {row['date']}
-                </div>
-            </div>
-            <div style='width:100px;text-align:center;'>
-                <span class='track-pill'>
-                    {row['avg_tempo']:.0f} BPM
-                </span>
-            </div>
-            <div style='width:100px;text-align:center;'>
-                <span class='track-pill'>
-                    {int(row['avg_energy']*100)}%
-                </span>
-            </div>
-            <div style='width:100px;text-align:center;
-                        font-size:1rem;font-weight:700;
-                        color:{p_col};'>
-                {prod:.0f}/10
-            </div>
-            <div style='width:80px;text-align:center;
-                        font-size:0.9rem;color:#B3B3B3;'>
-                {focus:.0f}/10
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+            song = '—'
+        tsk = row['task_type'].title()
+        dt  = str(row['date'])[:10]
+
+        s_clr = G if prod >= 7 else A if prod >= 5 else C
+        e_clr = G if eng < 0.4 else B if eng < 0.7 else A
+
+        def mpill(clr, txt):
+            rr = int(clr[1:3], 16); gg = int(clr[3:5], 16); bb = int(clr[5:7], 16)
+            return (f"<span style='background:rgba({rr},{gg},{bb},0.14);color:{clr};"
+                    f"border-radius:500px;padding:3px 8px;font-size:0.7rem;"
+                    f"font-weight:600;white-space:nowrap;'>{txt}</span>")
+
+        st.markdown(
+            f"<div style='display:grid;"
+            f"grid-template-columns:26px 1fr 80px 80px 80px 70px;"
+            f"gap:8px;align-items:center;padding:7px 10px;"
+            f"border-radius:5px;margin:1px 0;'>"
+            f"<span style='font-size:0.8rem;color:#B3B3B3;text-align:center;'>{i}</span>"
+            f"<div style='overflow:hidden;'>"
+            f"<div style='font-size:0.87rem;font-weight:600;color:#FFFFFF;"
+            f"white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>{song[:38]}</div>"
+            f"<div style='font-size:0.73rem;color:#B3B3B3;margin-top:1px;'>"
+            f"{tsk} &middot; {dt}</div></div>"
+            f"<div style='text-align:center;'>"
+            f"<span style='background:#282828;color:#FFFFFF;border-radius:500px;"
+            f"padding:3px 8px;font-size:0.7rem;font-weight:500;'>{bpm:.0f}</span></div>"
+            f"<div style='text-align:center;'>{mpill(e_clr, f'{int(eng*100)}%')}</div>"
+            f"<div style='text-align:center;font-size:0.92rem;font-weight:700;"
+            f"color:{s_clr};'>{prod:.0f}/10</div>"
+            f"<div style='text-align:center;font-size:0.87rem;color:#B3B3B3;'>"
+            f"{focus:.0f}/10</div></div>",
+            unsafe_allow_html=True
+        )
 
 # ── Footer ───────────────────────────────────────────────────
-st.markdown("""
-<hr class='sp-divider'>
-<div style='display:flex;justify-content:space-between;
-            align-items:center;padding:1rem 0 2rem;'>
-    <div style='font-size:0.8rem;color:#B3B3B3;'>
-        <span style='color:#1DB954;font-weight:700;'>
-            MoodMetric
-        </span>
-        &nbsp;·&nbsp; Music × Productivity Analytics
-    </div>
-    <div style='font-size:0.75rem;color:#535353;'>
-        Built with Streamlit &nbsp;·&nbsp;
-        Powered by Spotify API
-    </div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    "<div style='border-top:1px solid #282828;margin-top:2rem;"
+    "display:flex;justify-content:space-between;align-items:center;"
+    "padding:1rem 0 2rem;'>"
+    "<div style='font-size:0.8rem;color:#535353;'>"
+    "<span style='color:#1DB954;font-weight:700;'>MoodMetric</span>"
+    " &nbsp;&middot;&nbsp; Music &times; Productivity Analytics</div>"
+    "<div style='font-size:0.72rem;color:#333;'>"
+    "Streamlit &nbsp;&middot;&nbsp; Spotify API"
+    " &nbsp;&middot;&nbsp; scikit-learn</div></div>",
+    unsafe_allow_html=True
+)
