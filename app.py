@@ -185,9 +185,14 @@ def load_data():
 
 @st.cache_data
 def load_spotify():
-    return pd.read_csv(
-        os.path.join(DATA_DIR, 'dataset.csv'), encoding='utf-8')
-
+    path = os.path.join(DATA_DIR, 'dataset.csv')
+    if not os.path.exists(path):
+        return pd.DataFrame(columns=[
+            'track_name','artists','tempo',
+            'energy','valence','instrumentalness',
+            'danceability','acousticness'
+        ])
+    return pd.read_csv(path, encoding='utf-8')
 @st.cache_resource
 def load_model():
     with open(os.path.join(DATA_DIR, 'model.pkl'), 'rb') as f:
