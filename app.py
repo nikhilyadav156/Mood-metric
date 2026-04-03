@@ -192,7 +192,13 @@ def load_spotify():
             'energy','valence','instrumentalness',
             'danceability','acousticness'
         ])
-    return pd.read_csv(path, encoding='utf-8')
+    df = pd.read_csv(path, encoding='utf-8')
+    # Convert numeric columns to float for proper filtering
+    for c in ['tempo', 'energy', 'valence', 'instrumentalness', 
+              'danceability', 'acousticness']:
+        if c in df.columns:
+            df[c] = pd.to_numeric(df[c], errors='coerce')
+    return df
 @st.cache_resource
 def load_model():
     with open(os.path.join(DATA_DIR, 'model.pkl'), 'rb') as f:
